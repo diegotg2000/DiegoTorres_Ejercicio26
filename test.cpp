@@ -14,6 +14,7 @@ float T=30.0;
 
 int main(){
     explicit_Euler(T/50000); 
+    rk4(T/50000);
     return 0;
 }
 
@@ -53,19 +54,19 @@ void rk4(float h){
     outfile<<0<<' '<<yn<<endl;
     for(int i=1;i<=N;i++){
         k11=h*(vn);
-        k21=h*(-w*w*sin(yn));
+        k21=h*(-w*w*yn);
             
         k12=h*(vn+k21/2);
-        k22=h*(-w*w*sin(yn+k11/2));
+        k22=h*(-w*w*(yn+k11/2));
             
         k13=h*(vn+k22/2);
-        k23=h*(-w*w*sin(yn+k12/2));
+        k23=h*(-w*w*(yn+k12/2));
         
         k14=h*(vn+k23);
-        k24=h*(-w*w*sin(yn+k13));
+        k24=h*(-w*w*(yn+k13));
         
-        yn1=yn+(k11+k12+k13+k14)/6;
-        vn1=vn+(k21+k22+k23+k24)/6;
+        yn1=yn+(k11+2*k12+2*k13+k14)/6;
+        vn1=vn+(k21+2*k22+2*k23+k24)/6;
         yn=yn1;
         vn=vn1;
         outfile<<i*h<<' '<<yn<<endl;        
